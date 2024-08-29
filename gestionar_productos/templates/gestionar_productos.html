@@ -86,6 +86,7 @@
                 <a href="{% url 'activar_inactivar_producto' producto.id %}" class="btn btn-sm btn-secondary">
                     {% if producto.estado %}Inactivar{% else %}Activar{% endif %}
                 </a>
+                <a href="{% url 'eliminar_producto' producto.id %}" class="btn btn-sm btn-danger">Eliminar</a>
             </td>
         </tr>
         {% endfor %}

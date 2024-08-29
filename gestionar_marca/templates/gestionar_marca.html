@@ -51,6 +51,7 @@
                 <a href="{% url 'activar_inactivar_marca' marca.id %}" class="btn btn-sm btn-secondary">
                     {% if marca.estado %}Inactivar{% else %}Activar{% endif %}
                 </a>
+                <a href="{% url 'eliminar_marca' marca.id %}" class="btn btn-sm btn-danger">Eliminar</a>
             </td>
         </tr>
         {% endfor %}

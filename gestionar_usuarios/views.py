@@ -90,4 +90,20 @@ def consultar_usuario(request):
             return render(request, 'consultar_usuario.html', {'usuario': usuario})
         else:
             messages.error(request, 'Usuario no encontrado.')
+<<<<<<< HEAD
     return render(request, 'consultar_usuario.html')
+=======
+    return render(request, 'consultar_usuario.html')
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def eliminar_usuario(request, usuario_id):
+    usuario = get_object_or_404(Usuario, id=usuario_id)
+    if request.method == 'POST':
+        usuario.delete()
+        messages.success(request, 'Usuario eliminado exitosamente.')
+        return redirect('gestionar_usuarios')  
+
+    return render(request, 'confirmar_eliminacion_usuario.html', {'usuario': usuario})
+
+>>>>>>> a44fc48c1da68c7d685486a7adda0a954c3ea77c

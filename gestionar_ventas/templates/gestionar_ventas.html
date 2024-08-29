@@ -42,8 +42,9 @@
             <td>
                 <a href="{% url 'editar_venta' venta.id %}" class="btn btn-sm btn-primary">Editar</a>
                 <a href="{% url 'activar_desactivar_venta' venta.id %}" class="btn btn-sm btn-secondary">
-                    {% if venta.estado %}Desactivar{% else %}Activar{% endif %}
+                    {% if venta.estado %}Inactivar{% else %}Activar{% endif %}
                 </a>
+                <a href="{% url 'eliminar_venta' venta.id %}" class="btn btn-sm btn-danger">Eliminar</a>
             </td>
         </tr>
         {% endfor %}

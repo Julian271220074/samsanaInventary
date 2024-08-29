@@ -1,5 +1,9 @@
 :root {
+<<<<<<< HEAD
     --background: #1378c5;
+=======
+    --background: #84fac3;
+>>>>>>> a44fc48c1da68c7d685486a7adda0a954c3ea77c
     --navbar-width: 256px;
     --navbar-width-min: 80px;
     --navbar-dark-primary: #18283b;

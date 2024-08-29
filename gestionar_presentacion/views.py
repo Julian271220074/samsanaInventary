@@ -80,6 +80,16 @@ def consultar_presentacion(request):
 
 
 
+@login_required
+def eliminar_presentacion(request, presentacion_id):
+    presentacion = get_object_or_404(Presentacion, id=presentacion_id)
+    if request.method == 'POST':
+        presentacion.delete()
+        messages.success(request, 'Presentacion eliminada exitosamente.')
+        return redirect('gestionar_presentacion')  
+
+    return render(request, 'confirmar_eliminacion_presentacion.html', {'presentacion': presentacion})
+
 
 
 

@@ -71,4 +71,13 @@ def activar_desactivar_venta(request, venta_id):
     venta.save()
     return redirect('gestionar_ventas')
 
+@login_required
+def eliminar_venta(request, venta_id):
+    venta = get_object_or_404(Venta, id=venta_id)
+    if request.method == 'POST':
+        venta.delete()
+        messages.success(request, 'Venta eliminada exitosamente.')
+        return redirect('gestionar_ventas')  
+
+    return render(request, 'confirmar_eliminacion_ventas.html', {'ventas': venta})
 

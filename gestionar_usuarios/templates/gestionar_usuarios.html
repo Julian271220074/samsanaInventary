@@ -44,6 +44,7 @@
                 <a href="{% url 'activar_inactivar_usuario' usuario.id %}" class="btn btn-sm btn-secondary">
                     {% if usuario.estado %}Desactivar{% else %}Activar{% endif %}
                 </a>
+                
             </td>
         </tr>
         {% endfor %}

@@ -41,8 +41,9 @@
             <td>
                 <a href="{% url 'editar_categoria' categoria.id %}" class="btn btn-sm btn-primary">Editar</a>
                 <a href="{% url 'activar_inactivar_categoria' categoria.id %}" class="btn btn-sm btn-secondary">
-                    {% if categoria.estado %}Desactivar{% else %}Activar{% endif %}
+                    {% if categoria.estado %}Inactivar{% else %}Activar{% endif %}
                 </a>
+                <a href="{% url 'eliminar_categoria' categoria.id %}" class="btn btn-sm btn-danger">Eliminar</a>
             </td>
         </tr>
         {% endfor %}

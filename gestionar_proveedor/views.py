@@ -82,3 +82,13 @@ def consultar_proveedor(request):
             messages.error(request, 'Proveedor no encontrado.')
     return render(request, 'consultar_proveedor.html')
 
+@login_required
+def eliminar_proveedor(request, proveedor_id):
+    proveedor = get_object_or_404(Proveedor, id=proveedor_id)
+    if request.method == 'POST':
+        proveedor.delete()
+        messages.success(request, 'Proveedor eliminado exitosamente.')
+        return redirect('gestionar_proveedor')  
+
+    return render(request, 'confirmar_eliminacion_proveedor.html', {'proveedor': proveedor})
+

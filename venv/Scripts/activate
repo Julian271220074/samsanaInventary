@@ -39,10 +39,17 @@ deactivate nondestructive
 if [ "${OSTYPE:-}" = "cygwin" ] || [ "${OSTYPE:-}" = "msys" ] ; then
     # transform D:\path\to\venv to /d/path/to/venv on MSYS
     # and to /cygdrive/d/path/to/venv on Cygwin
+<<<<<<< HEAD:venv/Scripts/activate
     export VIRTUAL_ENV=$(cygpath "C:\Users\Sena\Documents\again\venv")
 else
     # use the path as-is
     export VIRTUAL_ENV="C:\Users\Sena\Documents\again\venv"
+=======
+    export VIRTUAL_ENV=$(cygpath "C:\Users\Sena\Documents\Nueva carpeta\inventary\.venv")
+else
+    # use the path as-is
+    export VIRTUAL_ENV="C:\Users\Sena\Documents\Nueva carpeta\inventary\.venv"
+>>>>>>> a44fc48c1da68c7d685486a7adda0a954c3ea77c:.venv/Scripts/activate
 fi
 
 _OLD_VIRTUAL_PATH="$PATH"

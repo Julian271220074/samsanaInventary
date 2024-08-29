@@ -50,9 +50,15 @@ def editar_compra(request, compra_id):
 @login_required
 def activar_inactivar_compra(request, compra_id):
     compra = get_object_or_404(Compra, id=compra_id)
+<<<<<<< HEAD
     compra.estado = not compra.estado
     compra.save()
     messages.success(request, f'Compra {compra.estado == True} con éxito.')
+=======
+    compra.estado = not compra.estado  
+    compra.save()
+    messages.success(request, f'Compra { compra.estado == True:} con éxito.')
+>>>>>>> a44fc48c1da68c7d685486a7adda0a954c3ea77c
     return redirect('gestionar_compra')
 
 
@@ -78,6 +84,7 @@ def consultar_compra(request):
         return render(request, 'consultar_compra.html', {'compras': compras})
     return render(request, 'consultar_compra.html')
 
+<<<<<<< HEAD
 def filtrar_compras(request):
     estado_filtro = request.GET.get('estado', None)
     fecha = request.GET.get('fecha', None)
@@ -102,3 +109,16 @@ def filtrar_compras(request):
     }
 
     return render(request, 'gestionar_compra.html', context)
+=======
+
+@login_required
+def eliminar_compra(request, compra_id):
+    compra = get_object_or_404(Compra, id=compra_id)
+    if request.method == 'POST':
+        compra.delete()
+        messages.success(request, 'Compra eliminada exitosamente.')
+        return redirect('gestionar_compra')  
+
+    return render(request, 'confirmar_eliminacion_compra.html', {'compra': compra})
+
+>>>>>>> a44fc48c1da68c7d685486a7adda0a954c3ea77c

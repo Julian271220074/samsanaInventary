@@ -81,4 +81,62 @@ def añadir_marca(request):
         form = MarcaForm()
     return render(request, 'añadir_marca.html', {'form': form})
 
+<<<<<<< HEAD
 # Nota: Asegúrate de que estas vistas estén registradas en tu archivo urls.py
+=======
+
+
+@login_required
+def editar_marca(request, marca_id):
+    marca = get_object_or_404(Marca, id=marca_id)
+    if request.method == 'POST':
+        form = MarcaForm(request.POST, request.FILES, instance=marca)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Marca actualizada con éxito.')
+            return redirect('gestionar_marca')
+    else:
+        form = MarcaForm(instance=marca)
+    return render(request, 'editar_marca.html', {'form': form, 'marca': marca})
+
+
+
+@login_required
+def activar_inactivar_marca(request, marca_id):
+    marca = get_object_or_404(Marca, id=marca_id)
+    marca.estado = not marca.estado
+    marca.save()
+    estado = "activada" if marca.estado else "inactivada"
+    messages.success(request, f'Marca {estado} con éxito.')
+    return redirect('gestionar_marca')
+
+
+
+@login_required
+def consultar_marca(request):
+    if request.method == 'POST':
+        id_marca = request.POST.get('id_marca')
+        nombre = request.POST.get('nombre')
+        marca = None
+        if id_marca:
+            marca = Marca.objects.filter(id=id_marca).first()
+        elif nombre:
+            marca = Marca.objects.filter(nombre__icontains=nombre).first()
+        if marca:
+            return render(request, 'consultar_marca.html', {'marca': marca})
+        else:
+            messages.error(request, 'Marca no encontrada.')
+    return render(request, 'consultar_marca.html')
+
+@login_required
+def eliminar_marca(request, marca_id):
+    marca = get_object_or_404(Marca, id=marca_id)
+    if request.method == 'POST':
+        marca.delete()
+        messages.success(request, 'Marca eliminada exitosamente.')
+        return redirect('gestionar_marca')  
+
+    return render(request, 'confirmar_eliminacion_marca.html', {'marca': marca})
+
+
+>>>>>>> a44fc48c1da68c7d685486a7adda0a954c3ea77c

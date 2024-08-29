@@ -64,6 +64,15 @@ def activar_inactivar_producto(request, producto_id):
     messages.success(request, f'Producto {estado} con éxito.')
     return redirect('gestionar_productos')
 
+@login_required
+def eliminar_producto(request, producto_id):
+    producto = get_object_or_404(Producto, id=producto_id)
+    if request.method == 'POST':
+        producto.delete()
+        messages.success(request, 'Producto eliminado exitosamente.')
+        return redirect('gestionar_productos')  
+
+    return render(request, 'confirmar_eliminacion_producto.html', {'producto': producto})
 
 @login_required
 def filtrar_productos(request):

@@ -8,7 +8,11 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
+<<<<<<< HEAD:venv/Scripts/activate.bat
 set VIRTUAL_ENV=C:\Users\Sena\Documents\again\venv
+=======
+set VIRTUAL_ENV=C:\Users\Sena\Documents\Nueva carpeta\inventary\.venv
+>>>>>>> a44fc48c1da68c7d685486a7adda0a954c3ea77c:.venv/Scripts/activate.bat
 
 if not defined PROMPT set PROMPT=$P$G
 

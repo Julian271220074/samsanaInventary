@@ -77,6 +77,7 @@ def consultar_categoria(request):
             messages.error(request, 'Categoría no encontrada.')
     return render(request, 'consultar_categoria.html')
 
+<<<<<<< HEAD
 def filtrar_categorias(request):
     estado_filtro = request.GET.get('estado', None)
     buscar = request.GET.get('buscar', '')
@@ -96,3 +97,15 @@ def filtrar_categorias(request):
     }
 
     return render(request, 'gestionar_categoria.html', context)
+=======
+@login_required
+def eliminar_categoria(request, categoria_id):
+    categoria = get_object_or_404(Categoria, id=categoria_id)
+    if request.method == 'POST':
+        categoria.delete()
+        messages.success(request, 'Categoria eliminada exitosamente.')
+        return redirect('gestionar_categoria')  
+
+    return render(request, 'confirmar_eliminacion_categoria.html', {'categoria': categoria})
+
+>>>>>>> a44fc48c1da68c7d685486a7adda0a954c3ea77c

@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import  Compra
 from .forms import  CompraForm
+from gestionar_proveedor.models import Proveedor
 
 # Create your views here.
 
@@ -49,9 +50,9 @@ def editar_compra(request, compra_id):
 @login_required
 def activar_inactivar_compra(request, compra_id):
     compra = get_object_or_404(Compra, id=compra_id)
-    compra.estadoCompra = 'Inactiva' if compra.estadoCompra == 'Activa' else 'Activa'
+    compra.estado = not compra.estado
     compra.save()
-    messages.success(request, f'Compra {compra.estadoCompra.lower()} con éxito.')
+    messages.success(request, f'Compra {compra.estado == True} con éxito.')
     return redirect('gestionar_compra')
 
 
@@ -76,3 +77,28 @@ def consultar_compra(request):
         
         return render(request, 'consultar_compra.html', {'compras': compras})
     return render(request, 'consultar_compra.html')
+
+def filtrar_compras(request):
+    estado_filtro = request.GET.get('estado', None)
+    fecha = request.GET.get('fecha', None)
+    proveedor_id = request.GET.get('proveedor', '')
+
+    compras = Compra.objects.all()
+
+    if estado_filtro == 'activado':
+        compras = compras.filter(estado=True)
+    elif estado_filtro == 'inactivado':
+        compras = compras.filter(estado=False)
+
+    if fecha:
+        compras = compras.filter(fecha_Compra__date=fecha)
+    
+    if proveedor_id:
+        compras = compras.filter(proveedor_Id_id=proveedor_id)
+
+    context = {
+        'compras': compras,
+        'proveedores': Proveedor.objects.all()
+    }
+
+    return render(request, 'gestionar_compra.html', context)

@@ -76,3 +76,23 @@ def consultar_categoria(request):
         else:
             messages.error(request, 'Categoría no encontrada.')
     return render(request, 'consultar_categoria.html')
+
+def filtrar_categorias(request):
+    estado_filtro = request.GET.get('estado', None)
+    buscar = request.GET.get('buscar', '')
+
+    categorias = Categoria.objects.all()
+
+    if estado_filtro == 'activado':
+        categorias = categorias.filter(estado=True)
+    elif estado_filtro == 'inactivado':
+        categorias = categorias.filter(estado=False)
+
+    if buscar:
+        categorias = categorias.filter(nombre__icontains=buscar)
+
+    context = {
+        'categorias': categorias,
+    }
+
+    return render(request, 'gestionar_categoria.html', context)

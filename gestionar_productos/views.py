@@ -3,7 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Producto
 from .forms import ProductoForm
+from gestionar_categoria.models import Categoria
+from gestionar_marca.models import Marca
+from gestionar_presentacion.models import Presentacion
 import logging
+
 
 # Create your views here.
 def dashboard(request):
@@ -61,3 +65,43 @@ def activar_inactivar_producto(request, producto_id):
     return redirect('gestionar_productos')
 
 
+@login_required
+def filtrar_productos(request):
+    estado_filtro = request.GET.get('estado', None)
+    buscar = request.GET.get('buscar', '')
+    precio_min = request.GET.get('precio_min', None)
+    precio_max = request.GET.get('precio_max', None)
+    categoria_id = request.GET.get('categoria', '')
+    marca_id = request.GET.get('marca', '')
+    presentacion_id = request.GET.get('presentacion', '')
+    
+
+    productos = Producto.objects.all()
+
+    if estado_filtro == 'activado':
+        productos = productos.filter(estado=True)
+    elif estado_filtro == 'inactivado':
+        productos = productos.filter(estado=False)
+
+    if buscar:
+        productos = productos.filter(nombre__icontains=buscar)
+    if precio_min:
+        productos = productos.filter(precio__gte=precio_min)
+    if precio_max:
+        productos = productos.filter(precio__lte=precio_max)
+    if categoria_id:
+        productos = productos.filter(categoria_id=categoria_id)
+    if marca_id:
+        productos = productos.filter(marca_id=marca_id)
+    if presentacion_id:
+        productos = productos.filter(presentacion_id=presentacion_id)
+
+
+    context = {
+        'productos': productos,
+        'categorias': Categoria.objects.all(),
+        'marcas': Marca.objects.all(),
+        'presentaciones': Presentacion.objects.all(),
+    }
+
+    return render(request, 'gestionar_productos.html', context)

@@ -5,16 +5,31 @@
 
 <a href="{% url 'añadir_compra' %}" class="btn btn-primary mb-3">Añadir Compra</a>
 
-<div class="mb-3">
-    <h3>Consultar Compra</h3>
-    <form method="post" action="{% url 'consultar_compra' %}">
-        {% csrf_token %}
-        <div class="input-group">
-            <input type="text" name="id_compra" class="form-control" placeholder="ID de Compra">
-            <button type="submit" class="btn btn-secondary">Buscar</button>
+<form method="get" action="{% url 'filtrar_compras' %}">
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <input type="date" class="form-control" placeholder="Fecha" name="fecha" value="{{ request.GET.fecha }}">
         </div>
-    </form>
-</div>
+        <div class="col-md-3">
+            <select id="proveedor" name="proveedor" class="form-control">
+                <option value="">Proveedor (Todos)</option>
+                {% for proveedor in proveedores %}
+                    <option value="{{ proveedor.id }}" {% if request.GET.proveedor == proveedor.id|stringformat:"s" %}selected{% endif %}>{{ proveedor.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select id="estado" name="estado" class="form-control">
+                <option value="">Filtrar estado (Todos)</option>
+                <option value="activado" {% if request.GET.estado == "activado" %}selected{% endif %}>Activado</option>
+                <option value="inactivado" {% if request.GET.estado == "inactivado" %}selected{% endif %}>Inactivado</option>
+            </select>
+        </div>
+        <div class="col-md-12 mt-3">
+            <button type="submit" class="btn btn-outline-info">Buscar</button>
+        </div>
+    </div>
+</form>
 
 <table class="table">
     <thead>
